@@ -1,0 +1,20 @@
+package Lines;
+
+
+
+import javax.swing.JFrame;
+
+public class Paint {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Dda d = new Dda();
+		JFrame f = new JFrame();
+		
+		f.add(d);
+		f.setSize(800, 800);
+		f.setVisible(true);
+		;
+	}
+
+}

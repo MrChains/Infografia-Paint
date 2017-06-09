@@ -1,0 +1,30 @@
+import java.awt.Graphics;
+
+public class Dda {
+	public Dda() {
+
+	}
+
+	public static void draw(double x1, double y1, double x2, double y2, double count, Graphics g) {
+		double dx, dy, xc, yc;
+		try{
+            dx=x2-x1;
+            dy=y2-y1;
+            	
+            xc=(dx/count);
+            yc=(dy/count);
+               
+        for(int k=1; k<=count; k++)
+        {
+            x1=x1+xc;
+            y1=y1+yc;
+
+			g.drawRect((int)x1, (int)y1, 17, 17);
+			g.fillRect((int)x1, (int)y1, 17, 17);
+           
+        }
+    }catch(Exception e){}
+		
+				
+	}
+}

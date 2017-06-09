@@ -1,0 +1,55 @@
+package Lines;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JFrame;
+import java.util.Scanner;
+import java.lang.*;
+
+public class Dda extends GridMouse {
+
+	public Dda(){
+
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		int dx, dy;
+		float Xinc, Yinc, x, y, steps;
+		
+		xi = GridMouse.getXi();
+		yi = GridMouse.getYi();
+		
+		xf = GridMouse.getXf();
+		yf = GridMouse.getYf();
+		
+		dy = yf - yi;
+		dx = xf - xi;
+		g.fillRect(xi, yi, 10, 10);
+		if (dy > dx) {
+			steps = Math.abs(dy);
+		} easd
+			steps = Math.abs(dx);
+		}
+		x = xi;
+		y = yi;
+		Yinc = dy / steps;
+		Xinc = dx / steps;
+		while (steps != 0) {
+
+			steps--;
+			x = x + Xinc;
+			y = y + Yinc;
+
+			g.fillRect((int) Math.round(x/10.0)*10, (int) Math.round(y/10.0)*10, 10, 10);
+
+		}
+
+	}
+
+
+	}

@@ -1,0 +1,102 @@
+import java.awt.event.MouseEvent;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public static void main(String args[]) {
+    JFrame f = new JFrame("Draw a Red Line");
+    f.setSize(300, 300);
+    f.setLocation(300, 300);
+    f.setResizable(false);
+    JPanel p = new JPanel() {
+        Point pointStart = null;
+        Point pointEnd   = null;
+        {
+            addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                    pointStart = e.getPoint();
+                }
+
+                public void mouseReleased(MouseEvent e) {
+                    pointStart = null;
+                }
+            });
+            addMouseMotionListener(new MouseMotionAdapter() {
+                public void mouseMoved(MouseEvent e) {
+                    pointEnd = e.getPoint();
+                }
+
+                public void mouseDragged(MouseEvent e) {
+                    pointEnd = e.getPoint();
+                    repaint();
+                }
+            });
+        }
+        public void paint(Graphics g) {
+            super.paint(g);
+            if (pointStart != null) {
+                g.setColor(Color.RED);
+                g.drawLine(pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+            }
+        }
+    };
+    f.add(p);
+    f.setVisible(true); 
+}
+
+
+
+
+/*import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+class GridsCanvas extends JPanel {
+  int width, height;
+
+  int rows;
+
+  int cols;
+  {
+  addMouseListener(new MouseAdapter(){
+	public void mousePressed(MouseEvent e){
+		pointStart = e.getPoint();
+	}  
+  })
+  }
+  GridsCanvas(int w, int h, int r, int c) {
+    setSize(width = w, height = h);
+    rows = r;
+    cols = c;
+  }
+
+  public void paint(Graphics g) {
+    int i;
+    width = getSize().width;
+    height = getSize().height;
+
+    // draw the rows
+    int rowHt = height / (rows);
+    for (i = 0; i < rows; i++)
+      g.drawLine(0, i * rowHt, width, i * rowHt);
+
+    // draw the columns
+    int rowWid = width / (cols);
+    for (i = 0; i < cols; i++)
+      g.drawLine(i * rowWid, 0, i * rowWid, height);
+  }
+}
+
+public class Main extends JFrame {
+  public Main() {
+    GridsCanvas xyz = new GridsCanvas(200, 200, 20, 20);
+    add(xyz);
+    pack();
+  }
+
+  public static void main(String[] a) {
+    new Main().setVisible(true);
+  }
+}*/

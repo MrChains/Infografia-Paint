@@ -1,0 +1,43 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
+public class DrawLine extends JPanel {
+	
+	public static void main(String[] args) {
+
+		frame paint1 = new frame();
+		/*paintP.add(paint1, BorderLayout.CENTER);
+		paintP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		paintP.setSize(400,400);
+		paintP.setVisible(true);*/
+		paint1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		paint1.setSize(400,400);
+		paint1.setVisible(true);
+		}
+	
+	private class frame extends JFrame{
+		private Point points[] = new Point[10000];
+		private int count = 0;
+		
+		public frame(){
+			setBackground(Color.BLACK);
+			MouseHandler mouse = new MouseHandler();
+			this.addMouseMotionListener(mouse);
+			this.addMouseListener(mouse);
+		}
+		
+		
+	}
+	
+}

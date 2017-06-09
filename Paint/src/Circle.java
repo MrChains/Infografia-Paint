@@ -1,0 +1,45 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Circle extends MyShape {
+	private int x, y, R, p;
+
+	public Circle() {
+		super();
+	}
+
+	public Circle(int x1, int y1, int x2, int y2, Color color) {
+		super(x1, y1, x2, y2, color);
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(color);
+		R = Math.abs(Math.round((x2 - x1) / 2));
+		x = 0;
+		y = R; // Start at the top of the circle and draw 2nd octant only
+		p = 1 - R;
+
+		while (x <= y) { // Keep going until we cross the line x=y
+			x++; // Always take a step to the right
+
+			if (p < 0)
+				p += 2 * x + 1;
+			else {
+				y--;
+				p += 2 * (x - y) + 1;
+			}
+			g.fillRect((int) Math.round((x1 + x) / 10.0) * 10, (int) Math.round((y1 + y) / 10.0) * 10, 10, 10);
+			// Mirror octants.
+			g.fillRect((int) Math.round((x1 + x) / 10.0) * 10, (int) Math.round((y1 - y) / 10.0) * 10, 10, 10);
+			g.fillRect((int) Math.round((x1 - x) / 10.0) * 10, (int) Math.round((y1 + y) / 10.0) * 10, 10, 10);
+			g.fillRect((int) Math.round((x1 - x) / 10.0) * 10, (int) Math.round((y1 - y) / 10.0) * 10, 10, 10);
+			g.fillRect((int) Math.round((x1 + y) / 10.0) * 10, (int) Math.round((y1 + x) / 10.0) * 10, 10, 10);
+			g.fillRect((int) Math.round((x1 + y) / 10.0) * 10, (int) Math.round((y1 - x) / 10.0) * 10, 10, 10);
+			g.fillRect((int) Math.round((x1 - y) / 10.0) * 10, (int) Math.round((y1 + x) / 10.0) * 10, 10, 10);
+			g.fillRect((int) Math.round((x1 - y) / 10.0) * 10, (int) Math.round((y1 - x) / 10.0) * 10, 10, 10);
+
+		} // end while
+	}
+
+}

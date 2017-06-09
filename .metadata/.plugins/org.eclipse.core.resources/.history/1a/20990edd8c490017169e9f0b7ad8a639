@@ -1,0 +1,48 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Circle extends MyShape {
+	private int x, y, R, d, ddx, ddxy;
+
+	public Circle() {
+		super();
+	}
+
+	public Circle(int x1, int y1, int x2, int y2, Color color) {
+		super(x1, y1, x2, y2, color);
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		x = 0;
+		y = x1-x2; // Start at the top of the circle and draw 2nd octant only
+		d = 5 - (R << 2); // Potential function f(x,y)=x*x+y*y-R*R, scaled by 4
+							// and evaluated at the first midpoint: x=1, y=R-0.5
+		ddx = 12; // Intital value for ddx
+		ddxy = 20 - (R << 3); // Intital value for ddxy
+
+		while (x <= y) { // Keep going until we cross the line x=y
+			g.drawRect((int) Math.round(x1 + x / 10.0) * 10, (int) Math.round(y1 + y / 10.0) * 10, 10, 10); 
+			// Mirror octants.
+			g.drawRect((int) Math.round(x1 + x / 10.0) * 10, (int) Math.round(y1 - y / 10.0) * 10, 10, 10); 
+			g.drawRect((int) Math.round(x1 - x / 10.0) * 10, (int) Math.round(y1 + y / 10.0) * 10, 10, 10);
+			g.drawRect((int) Math.round(x1 - x / 10.0) * 10, (int) Math.round(y1 - y / 10.0) * 10, 10, 10);
+			g.drawRect((int) Math.round(x1 + y / 10.0) * 10, (int) Math.round(y1 + x / 10.0) * 10, 10, 10);
+			g.drawRect((int) Math.round(x1 + y / 10.0) * 10, (int) Math.round(y1 - x / 10.0) * 10, 10, 10);
+			g.drawRect((int) Math.round(x1 - y / 10.0) * 10, (int) Math.round(y1 + x / 10.0) * 10, 10, 10);
+			g.drawRect((int) Math.round(x1 - y / 10.0) * 10, (int) Math.round(y1 - x / 10.0) * 10, 10, 10);
+
+			if (d > 0) {
+				d = d + ddxy; // Update d for the next midpoint
+				y = y - 1; // Take a step down when d is positive
+				ddxy = ddxy + 16; // Update ddxy for one step down
+			} else {
+				d = d + ddx; // Update d for the next midpoint
+				ddxy = ddxy + 8; // Update ddxy for no step down
+			}
+			ddx = ddx + 8; // Update ddx for one step right
+			x = x + 1; // Always take a step to the right
+		} // end while
+	}
+
+}

@@ -1,0 +1,144 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.Color;
+
+public class Frame extends JFrame {
+	private JLabel label;
+	private Panel panel;
+
+	private JButton back; // delete last action
+	private JButton forth; // redo
+	private JButton clear; // clear panel
+	private JButton paint; // clear panel
+	private JComboBox colors; // color select combobox
+
+//	private JCheckBox filled; // checkbox to select whether shape is filled or
+								// not
+
+	private String colorOptions[] = { "Black", "Blue", "Gray", "Green", "Red", "Yellow" }; // color
+																									// combobox
+																									// Options
+
+	private Color colorArray[] = { Color.BLACK, Color.BLUE, Color.GRAY, Color.GREEN, Color.RED, Color.YELLOW }; // color
+																												// Options
+
+	private JComboBox shapes; // shape options
+
+	private String shapeOptions[] = { "Dda", "Bresenham", "Circle", "Elipse" };
+
+	private JPanel widgetJPanel; // contains buttons
+	private JPanel widgetPadder;
+
+	public Frame() {
+		super("Paint"); // Frame Name
+
+		JLabel statusLabel = new JLabel(""); // label to pass into Panel
+
+		panel = new Panel(statusLabel);
+
+		// create buttons
+		back = new JButton("Back");
+		forth = new JButton("Forth");
+		clear = new JButton("Clear");
+		paint = new JButton("Paint");
+
+		// create combobox
+		colors = new JComboBox(colorOptions);
+		shapes = new JComboBox(shapeOptions);
+
+		// create checkbox
+//		filled = new JCheckBox("Filled");
+
+		// JPanel widget layout
+		widgetJPanel = new JPanel();
+		widgetJPanel.setLayout(new GridLayout(1, 6, 10, 10));
+
+		// JPanel widget Padder
+		widgetPadder = new JPanel();
+		widgetPadder.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
+
+		// add widgets
+		widgetJPanel.add(back);
+		widgetJPanel.add(forth);
+		widgetJPanel.add(clear);
+		widgetJPanel.add(paint);
+		widgetJPanel.add(colors);
+		widgetJPanel.add(shapes);
+//		widgetJPanel.add(filled);
+		// add widgetJPanel to widgetPadder
+		widgetPadder.add(widgetJPanel);
+
+		// adding padder and panel to JFrame
+		add(widgetPadder, BorderLayout.NORTH);
+		add(panel, BorderLayout.CENTER);
+
+		// creating the button handlers
+		ButtonHandler buttonHandler = new ButtonHandler();
+		back.addActionListener(buttonHandler);
+		forth.addActionListener(buttonHandler);
+		clear.addActionListener(buttonHandler);
+		paint.addActionListener(buttonHandler);
+
+		// combobox and checkbox handlers
+		ItemListenerHandler handler = new ItemListenerHandler();
+		colors.addItemListener(handler);
+		shapes.addItemListener(handler);
+//		filled.addItemListener(handler);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1000, 1000);
+		setVisible(true);
+
+	}
+
+
+	private class ButtonHandler implements ActionListener {
+		// handles button events
+		public void actionPerformed(ActionEvent event) {
+			if (event.getActionCommand().equals("Back")) {
+				panel.clearLastShape();
+			} else if (event.getActionCommand().equals("Forth")) {
+				panel.redoLastShape();
+			} else if (event.getActionCommand().equals("Clear")) {
+				panel.clearDrawing();
+			} else if (event.getActionCommand().equals("Paint")) {
+				panel.paintDrawing();
+			}
+
+		} 
+	} 
+
+	
+	private class ItemListenerHandler implements ItemListener {
+		public void itemStateChanged(ItemEvent event) {
+
+			// determine whether combo box selected
+			if (event.getStateChange() == ItemEvent.SELECTED) {
+				// if event source is combo box colors pass in colorArray at
+				// index selected.
+				if (event.getSource() == colors) {
+					panel.setCurrentShapeColor(colorArray[colors.getSelectedIndex()]);
+				}
+
+				// else if event source is combo box shapes pass in index
+				// selected
+				else if (event.getSource() == shapes) {
+					panel.setCurrentShapeType(shapes.getSelectedIndex());
+				}
+			}
+
+		} 
+	}
+
+} // end class

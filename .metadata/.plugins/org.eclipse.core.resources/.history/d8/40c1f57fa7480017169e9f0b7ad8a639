@@ -1,0 +1,46 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Bresenham extends MyShape {
+
+	public Bresenham() {
+		super();
+	}
+
+	public Bresenham(int x1, int y1, int x2, int y2, Color color) {
+		super(x1, y1, x2, y2, color);
+	}
+
+	@Override
+	public void draw(Graphics g) {
+
+		int dx, dy, e, x, y;
+
+		dy = Math.abs(y2 - y1);
+		dx = Math.abs(x2 - x1);
+		e = dx - dy;
+
+		if(x1 < x2) x = 1;
+		else x = -1;
+		
+		if(y1 < y2) y = 1;
+		else y = -1;
+		
+			
+		while ((x1 != x2) || (y1 != y2)){
+			g.fillRect((int) Math.round(x / 10.0) * 10, (int) Math.round(y / 10.0) * 10, 10, 10);
+			int p = 2*e;
+			
+			if (p > -dy){
+				e -= dy;
+				x1 += x;				
+			}
+			if (p < dx){
+				e += dx;
+				y1 += y;
+			}
+			g.fillRect((int) Math.round(x1 / 10.0) * 10, (int) Math.round(y1 / 10.0) * 10, 10, 10);
+		}
+
+	}
+}

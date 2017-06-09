@@ -1,0 +1,76 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class DrawLine extends JFrame{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Point points[] = new Point[10000];
+		private Point pointends[] = new Point[10000];
+
+		private int count = 0;
+
+		public DrawLine() {
+			panel paint2 = new panel();
+
+			add(paint2, BorderLayout.CENTER);
+		}
+
+		public class panel extends JPanel{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public panel() {
+				setBackground(Color.BLACK);
+				MouseHandler mouse = new MouseHandler();
+				this.addMouseMotionListener(mouse);
+				this.addMouseListener(mouse);
+			}
+		
+			@Override
+			protected void paintComponent(Graphics g) {
+				// TODO Auto-generated method stub
+				super.paintComponent(g);
+				for (int i = 0; i < count; i++) {
+					g.setColor(Color.RED);
+					g.drawLine(points[i].x, points[i].y, pointends[i].x, pointends[i].y);
+				}
+			}
+		}
+
+		private class MouseHandler extends MouseAdapter {
+			public void mouseDragged(MouseEvent e) {
+				points[count - 1] = e.getPoint();
+				repaint();
+			}
+
+			public void mousePressed(MouseEvent e) {
+				if (count < points.length) {
+					points[count] = e.getPoint();
+					pointends[count] = e.getPoint(); // add end point
+					count++;
+					repaint();
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {
+
+			}
+		}
+	}
+}

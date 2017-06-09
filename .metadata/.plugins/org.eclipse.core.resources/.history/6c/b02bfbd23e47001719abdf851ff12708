@@ -1,0 +1,120 @@
+package Lines;
+
+//Bresenham.java
+
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.JFrame;
+import java.lang.Math;
+
+public class Bresenham extends JFrame {
+
+	// Main function, called when the program starts
+	public static void main(String[] args) {
+		
+		
+		// check for arguments:
+		// Argument l for line algorithm
+		// Argumetn c for circle algorithm
+		
+		/*
+		if (args.length < 1) {
+			System.err.println("Usage: Bresenham [ l | c ]");
+			System.exit(-1);
+		}
+			
+		if (args[0].equalsIgnoreCase("l")) {
+		}
+		
+		if (args[0].equalsIgnoreCase("c")) {
+		}
+		*/
+		
+		// Create an instance of this class that does the painting
+		new Bresenham();
+}
+
+
+
+	// Constructor
+	Bresenham() {
+		// Call the constructor of the superclass
+		// i.e. open a JFrame named "Bresenham"
+		super("Bresenham");
+		// add a window listener that exits the program when the JFrame is closed
+		addWindowListener(new WindowAdapter()
+				{public void windowClosing(WindowEvent e){System.exit(0);}});
+		setSize(900, 720);
+		// Add a canvas to the JFrame's ContentPane.
+		// The class CanvasBresenham inherits from Canvas!
+		getContentPane().add("Center", new CanvasBresenham());
+		// finally show it. This triggers the Canvas' paint method.
+		show();
+		// this should be used, if the object to be painted has changed.
+		// repaint();
+	}
+}
+
+
+class CanvasBresenham extends Canvas {
+	  
+		int centerX, centerY, dGrid = 1, maxX, maxY; 
+
+	// initialize the graphics
+	void initgr() {
+		Dimension d;
+		
+		// get the window size and compute minimum, maximum and center
+		d = getSize();
+		maxX = d.width - 1; 
+		maxY = d.height - 1;
+		centerX = maxX/2; centerY = maxY/2;
+	}
+
+
+	// draw one pixel of size dGrid
+	void putPixel(Graphics g, int x, int y)
+	{
+		g.drawRect(x, y, dGrid, dGrid); 
+	}
+
+
+	void drawLine(Graphics g, int x1, int y1, int x2, int y2) {
+		// Insert your algorithm here
+		
+		// just to show something...
+		// show start and end points
+		putPixel(g, x1, y1);
+		
+		putPixel(g, x2, y2);
+	}
+
+
+
+	void drawCircle(Graphics g, int xC, int yC, int radius) {
+
+		// Insert your algorithm here
+		
+		// Just to show something...
+		// show center and one point on the circle
+		putPixel(g, xC, yC);
+		
+		putPixel(g, xC+radius, yC+radius);
+	}
+
+
+
+	// do the painting within this canvas
+	// this method overrides the method "paint" in the class "Canvas"
+	public void paint(Graphics g) {
+		initgr();
+		drawLine(g, centerX, centerY, centerX+200, centerY+20);
+
+
+		drawCircle(g, 230, 100, 40);
+	}	
+
+
+}

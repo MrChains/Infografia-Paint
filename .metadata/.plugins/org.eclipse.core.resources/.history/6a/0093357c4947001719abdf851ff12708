@@ -1,0 +1,26 @@
+package Lines;
+
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Paint {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Dda d = new Dda();
+		JFrame f = new JFrame();
+		JPanel p = new JPanel();
+		GridMouse mouse = new GridMouse();
+		
+		p.addMouseMotionListener(mouse);
+		p.add(d);
+		
+		f.add(p);
+		f.setSize(800, 800);
+		f.setVisible(true);
+		;
+	}
+
+}

@@ -1,0 +1,100 @@
+package Lines;
+
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+public class GridMouse extends Canvas implements MouseListener, MouseMotionListener {
+	static int xi, yi, xf, yf;
+
+	@Override
+	public void paint(Graphics g) {
+		int width = getWidth();
+		int height = getHeight();
+
+		int dx, dy;
+		float Xinc, Yinc, x, y, steps;
+
+		for (int i = 0; i < width; i += 10)
+			g.drawLine(i, 0, i, height);
+
+		for (int i = 0; i < height; i += 10)
+			g.drawLine(0, i, width, i);
+		
+		int dx, dy;
+		float Xinc, Yinc, x, y, steps;
+
+		dy = yf - yi;
+		dx = xf - xi;
+		g.fillRect(xi, yi, 10, 10);
+		if (dy > dx) {
+			steps = Math.abs(dy);
+		} else {
+			steps = Math.abs(dx);
+		}
+		x = xi;
+		y = yi;
+		Yinc = dy / steps;
+		Xinc = dx / steps;
+		while (steps != 0) {
+
+			steps--;
+			x = x + Xinc;
+			y = y + Yinc;
+
+			g.fillRect((int) Math.round(x / 10.0) * 10, (int) Math.round(y / 10.0) * 10, 10, 10);
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		xf = (int) (Math.round(e.getX() / 10.0) * 10);
+		yf = (int) (Math.round(e.getY() / 10.0) * 10);
+		repaint();
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		xi = (int) (Math.round(e.getX() / 10.0) * 10);
+		yi = (int) (Math.round(e.getY() / 10.0) * 10);
+		repaint();
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		xf = (int) (Math.round(e.getX() / 10.0) * 10);
+		yf = (int) (Math.round(e.getY() / 10.0) * 10);
+		repaint();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
